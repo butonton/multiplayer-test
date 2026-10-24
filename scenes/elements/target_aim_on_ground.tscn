@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://c0ki6io81cthf"]
+
+[ext_resource type="Script" uid="uid://d184qpdtqk6vk" path="res://target_aim_on_ground.gd" id="1_wu5sn"]
+[ext_resource type="Script" uid="uid://y83vdac04juh" path="res://scenes/components/easy_player_visibility.gd" id="2_qrk5i"]
+[ext_resource type="Texture2D" uid="uid://dvssuu83e50l3" path="res://asets/target_aim1.png" id="3_pkjnc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu5sn"]
+atlas = ExtResource("3_pkjnc")
+region = Rect2(32, 16, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7dowm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu5sn")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7dowm"]
+size = Vector2(2, 32)
+
+[node name="target_aim_on_ground" type="StaticBody2D" unique_id=2091766136]
+script = ExtResource("1_wu5sn")
+metadata/impact = "iron"
+
+[node name="easy_player_visibility" type="Node" parent="." unique_id=38413240]
+script = ExtResource("2_qrk5i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1951215043]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_7dowm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1979009342]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_7dowm")

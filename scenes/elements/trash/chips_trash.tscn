@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://bit55yg878fyu"]
+
+[ext_resource type="Script" uid="uid://b70nm7ot583jb" path="res://scenes/elements/trash/trash.gd" id="1_fm6ux"]
+[ext_resource type="Texture2D" uid="uid://c2wn3w71javpf" path="res://asets/trash.png" id="2_lr044"]
+[ext_resource type="Script" uid="uid://y83vdac04juh" path="res://scenes/components/easy_player_visibility.gd" id="3_lr044"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5to1a"]
+atlas = ExtResource("2_lr044")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4rmk"]
+atlas = ExtResource("2_lr044")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yu8vh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5to1a")
+}],
+"loop": 1,
+"name": &"crash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4rmk")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l2g3n"]
+radius = 3.0
+height = 6.0
+
+[node name="chips_trash" type="StaticBody2D" unique_id=197722499]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_fm6ux")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=894667872]
+texture_filter = 1
+position = Vector2(-4.7683716e-07, -4.7683716e-07)
+scale = Vector2(0.6875, 0.6875)
+sprite_frames = SubResource("SpriteFrames_yu8vh")
+animation = &"crash"
+
+[node name="crash_zone" type="Area2D" parent="." unique_id=88072939]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="crash_zone" unique_id=562764845]
+shape = SubResource("CapsuleShape2D_l2g3n")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="easy_player_visibility" type="Node" parent="." unique_id=588140573]
+script = ExtResource("3_lr044")
+
+[connection signal="area_entered" from="crash_zone" to="." method="_on_crash_zone_area_entered"]

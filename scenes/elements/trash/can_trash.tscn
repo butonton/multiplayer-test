@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cxmrmnuo3bic0"]
+
+[ext_resource type="Script" uid="uid://b70nm7ot583jb" path="res://scenes/elements/trash/trash.gd" id="1_0bg6n"]
+[ext_resource type="Texture2D" uid="uid://c2wn3w71javpf" path="res://asets/trash.png" id="2_tm7vn"]
+[ext_resource type="AudioStream" uid="uid://c3p3b72n3sp83" path="res://sounds/iron_can_crashed.wav.wav" id="3_b8125"]
+[ext_resource type="Script" uid="uid://y83vdac04juh" path="res://scenes/components/easy_player_visibility.gd" id="4_tm7vn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlioq"]
+atlas = ExtResource("2_tm7vn")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm2km"]
+atlas = ExtResource("2_tm7vn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cl5c8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlioq")
+}],
+"loop": 0,
+"name": &"crash",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm2km")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cl5c8"]
+radius = 1.0
+height = 4.0
+
+[node name="can_trash" type="StaticBody2D" unique_id=197722499]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_0bg6n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=894667872]
+texture_filter = 1
+position = Vector2(5.9604645e-08, 5.9604645e-08)
+scale = Vector2(0.3984375, 0.3984375)
+sprite_frames = SubResource("SpriteFrames_cl5c8")
+
+[node name="crash_zone" type="Area2D" parent="." unique_id=88072939]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="crash_zone" unique_id=562764845]
+shape = SubResource("CapsuleShape2D_cl5c8")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1939842239]
+stream = ExtResource("3_b8125")
+volume_db = -8.0
+max_distance = 300.0
+panning_strength = 0.0
+
+[node name="easy_player_visibility" type="Node" parent="." unique_id=457307272]
+script = ExtResource("4_tm7vn")
+
+[connection signal="area_entered" from="crash_zone" to="." method="_on_crash_zone_area_entered"]

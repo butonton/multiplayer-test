@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cd3tp40rtwigg"]
+
+[ext_resource type="Script" uid="uid://cg5mqjbvwpwkw" path="res://scripts/globall/Network_manager.gd" id="1_cemok"]
+
+[node name="NetworkManager" type="Node" unique_id=1321853957]
+script = ExtResource("1_cemok")
+arena_count = -1

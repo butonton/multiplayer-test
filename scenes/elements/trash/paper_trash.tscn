@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://ceodcxv0yoitx"]
+
+[ext_resource type="Script" uid="uid://b70nm7ot583jb" path="res://scenes/elements/trash/trash.gd" id="1_ble54"]
+[ext_resource type="Texture2D" uid="uid://c2wn3w71javpf" path="res://asets/trash.png" id="2_rcqiq"]
+[ext_resource type="AudioStream" uid="uid://b0mmybqsam151" path="res://sounds/sound_paper_crushed.wav" id="3_rcqiq"]
+[ext_resource type="Script" uid="uid://y83vdac04juh" path="res://scenes/components/easy_player_visibility.gd" id="4_81ons"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81ons"]
+atlas = ExtResource("2_rcqiq")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mydw7"]
+atlas = ExtResource("2_rcqiq")
+region = Rect2(32, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_52ovn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81ons")
+}],
+"loop": 1,
+"name": &"crash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mydw7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x86s8"]
+size = Vector2(8, 4)
+
+[node name="paper_trash" type="StaticBody2D" unique_id=197722499]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_ble54")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=894667872]
+texture_filter = 1
+position = Vector2(-4.7683716e-07, -4.7683716e-07)
+scale = Vector2(0.6875, 0.6875)
+sprite_frames = SubResource("SpriteFrames_52ovn")
+animation = &"crash"
+
+[node name="crash_zone" type="Area2D" parent="." unique_id=88072939]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="crash_zone" unique_id=562764845]
+shape = SubResource("RectangleShape2D_x86s8")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=521787290]
+stream = ExtResource("3_rcqiq")
+pitch_scale = 1.65
+max_distance = 300.0
+panning_strength = 0.0
+
+[node name="easy_player_visibility" type="Node" parent="." unique_id=416522653]
+script = ExtResource("4_81ons")
+
+[connection signal="area_entered" from="crash_zone" to="." method="_on_crash_zone_area_entered"]

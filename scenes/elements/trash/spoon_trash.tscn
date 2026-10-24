@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cw6avormmw4a1"]
+
+[ext_resource type="Script" uid="uid://b70nm7ot583jb" path="res://scenes/elements/trash/trash.gd" id="1_xbq5r"]
+[ext_resource type="Texture2D" uid="uid://c2wn3w71javpf" path="res://asets/trash.png" id="2_i71i2"]
+[ext_resource type="AudioStream" uid="uid://hf8ibvsivoyd" path="res://sounds/sound_crunch.wav.wav" id="3_i71i2"]
+[ext_resource type="Script" uid="uid://y83vdac04juh" path="res://scenes/components/easy_player_visibility.gd" id="4_dwdyn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwdyn"]
+atlas = ExtResource("2_i71i2")
+region = Rect2(64, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf4gh"]
+atlas = ExtResource("2_i71i2")
+region = Rect2(32, 96, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ry74u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwdyn")
+}],
+"loop": 1,
+"name": &"crash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf4gh")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kf3tv"]
+radius = 1.0
+
+[node name="spoon_trash" type="StaticBody2D" unique_id=197722499]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_xbq5r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=894667872]
+texture_filter = 1
+scale = Vector2(0.34375003, 0.34375003)
+sprite_frames = SubResource("SpriteFrames_ry74u")
+
+[node name="crash_zone" type="Area2D" parent="." unique_id=88072939]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="crash_zone" unique_id=562764845]
+shape = SubResource("CircleShape2D_kf3tv")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=104232342]
+stream = ExtResource("3_i71i2")
+volume_db = -5.0
+max_distance = 300.0
+panning_strength = 0.0
+
+[node name="easy_player_visibility" type="Node" parent="." unique_id=1208089153]
+script = ExtResource("4_dwdyn")
+
+[connection signal="area_entered" from="crash_zone" to="." method="_on_crash_zone_area_entered"]
